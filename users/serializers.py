@@ -14,7 +14,8 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [ 'username', 'password',]
+        fields = '__all__'
+        read_only_fields = ('password', 'email')
     
     def create(self, validated_data):
         # Use Django's create_user to hash the password

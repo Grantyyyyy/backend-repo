@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -8,6 +9,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import LoginSerializer, UserSerializer
 from .models import User
+
+from customer_module.serializers import CartSerializer
 
 
 
@@ -54,3 +57,17 @@ class UserViewSet(ModelViewSet):
     #     if self.action in ['create', 'update', 'partial_update', 'destroy']:
     #         return [IsAdminUser()]
     #     return [IsAuthenticated()]
+
+    @action(detail=True, methods=['get'])
+    def cart_items(self, request, pk=None):
+        user = self.get_object()
+        cart_items = user.cartitem_set.all()
+        serializer = CartItemSerializer(cart_items, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=['get'])
+    def cart(self, request, pk=None):
+        user = self.get_object()
+        cart = user.cart_set.first()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)

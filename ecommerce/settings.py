@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     # Custom authentication app
     'users',
     'admin_module',
-    'customer',
+    'customer_module',
 
     'rest_framework',
     'rest_framework_simplejwt',
