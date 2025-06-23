@@ -26,10 +26,16 @@ SECRET_KEY = 'django-insecure-(le%hw5i0rnwekt#lex*rp8+9^gxxydq)l3716+tr!zd^4)c-k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://localhost:5173/', '127.0.0.1' ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
 
 
-# Application definition
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,9 +52,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

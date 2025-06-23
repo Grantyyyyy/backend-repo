@@ -13,6 +13,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name='Product Name')
+    image = models.ImageField(upload_to='products/', verbose_name='Product Image')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Category')
     description = models.TextField(verbose_name='Product Description')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')

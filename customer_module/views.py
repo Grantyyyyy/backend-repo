@@ -8,14 +8,6 @@ from .models import Cart, CartItem
 
 
 
-
-
-
-
-
-
-
-
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
