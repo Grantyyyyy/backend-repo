@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        read_only_fields = ('password', 'email')
+        # read_only_fields = ( 'email')
     
     def create(self, validated_data):
         # Use Django's create_user to hash the password

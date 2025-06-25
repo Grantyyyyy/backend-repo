@@ -71,3 +71,37 @@ class UserViewSet(ModelViewSet):
         cart = user.cart_set.first()
         serializer = CartSerializer(cart)
         return Response(serializer.data)
+    
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            user.is_active = False
+            user.save()
+            return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class InactiveUsersViewSet(ModelViewSet):
+    queryset = User.objects.filter(is_active=False)
+    serializer_class = UserSerializer
+
+    @action(detail=True, methods=['post'])
+    def activate_user(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            user.is_active = True
+            user.save()
+            return Response({'message': 'User activated successfully'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+    @action(detail=True, methods=['post'])
+    def deactivate_user(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            user.is_active = False
+            user.save()
+            return Response({'message': 'User deactivated successfully'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

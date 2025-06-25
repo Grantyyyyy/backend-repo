@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .serializers import CartSerializer, CartItemSerializer
 from .models import Cart, CartItem
@@ -24,7 +25,6 @@ class CartItemViewSet(ModelViewSet):
     #     cart_items = cart.cartitem_set.all()
     #     serializer = CartItemSerializer(cart_items, many=True)
     #     return Response(serializer.data)
-
 
 
 
